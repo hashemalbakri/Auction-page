@@ -1,0 +1,91 @@
+{% extends "auctions/layout.html" %}
+
+{% block title %}
+{{item.title}}
+{% endblock %}
+
+{% block body %}
+{% if item.auction_status == 0 %}
+<div style="background-color: green; text-align: center;padding:5px;color:white;width: 300px; border-radius: 5px;">
+    <h4 style="padding-top:4px ;text-align: center;">{{winner}} is the winner </h4>
+</div>
+{% endif %}
+<div style="display:flex ; justify-content:space-between">
+    <div>
+        <h1>Listing: {{item.title}}</h1>
+    </div>
+    <div style="margin-top:20px ; margin-right:50px;">
+        {% if test %}
+        <form action="{% url 'removewatch' item.id %}"><input
+                style="color:white; background-color:rgb(255, 0, 13); border: none; border-radius: 5px;width: 200px;height: 35px; "
+                type="submit" value="remove from watchlist"></form>
+        {% else %}
+        <form action="{% url 'watchcreate' item.id %}">
+            <input type="submit" value="Add to watch list"
+                style="color:white; background-color:rgb(35, 184, 35); border: none; border-radius: 5px;width: 140px;height: 35px; ">
+        </form>
+        {% endif %}
+    </div>
+</div>
+<div><img src="{{item.image}}" style="height:270px ;"></div>
+<div>
+    <p>{{item.description}}</p>
+</div>
+<div>
+    <h4>${{item.start_bid}}</h4>
+</div>
+{% if item.auction_status %}
+
+    <form action="{% url 'newbid' item.id %}" method="POST" style="display: inline;">
+        {% csrf_token %}
+        <div class="form-group">
+            <input class="form-control" type="number" placeholder="Bid" name="bid">
+        </div>
+        <input type="submit" value="Place bid"
+            style="margin-top:5px; color:white; background-color:#4d90fe ;width: 100px;height: 35px;border: none;border-radius: 5px;">
+    </form>
+    {% if item.creator_id == user %}
+    <form action="{% url 'close' item.id %}" method="POST" style="display: inline;">
+        {% csrf_token %}
+        <input type="submit" name="close" value="Close auction"
+            style="margin-top:5px; color:white; background-color:rgb(255, 0, 13) ;width: 120px;height: 35px;border: none;border-radius: 5px;">
+    </form>
+    {% endif %}
+
+{% else %}
+<div style="background-color:red ; color:white; height: 35px; width: 150px; border-radius: 3px;">
+    <h5 style="text-align: center; padding-top: 4px;">Auction Closed</h5>
+</div>
+
+{% endif %}
+<div style="margin-top:5px ;">
+    <h3>Details</h3>
+    <ul>
+        <li>listed by: <strong style="color:#4d90fe ;">{{ item.creator_id }}</strong></li>
+        <li>Category: {{item.category_list}}</li>
+        <li>Created at: <i>{{item.time_create}}</i></li>
+    </ul>
+</div>
+<div>
+    <h4>Comments</h4>
+    <form action="{% url 'comments' item.id %}" method="POST">
+        {% csrf_token %}
+        <div class="form-group"><input class="form-control" type="text" placeholder="Write comments" name="comments">
+        </div>
+        <input type="submit" value="Send"
+            style="margin-top:5px; color:white; background-color:#4d90fe ;width: 100px;height: 35px;border: none;border-radius: 5px;">
+    </form>
+</div>
+<div style="margin-top:15px ;">
+    {% for comm in comms %}
+    <div
+        style="border-radius:5px; border:2px solid rgb(179, 179, 179) ; margin-top: 5px; padding-left: 10px;display: flex;justify-content: space-between; padding-right: 10px; padding-top: 5px;">
+        <div>
+            <h6>{{comm.user_comment}}</h6>
+            <p>{{comm.content}}</p>
+        </div>
+        <div>{{comm.comment_time}}</div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

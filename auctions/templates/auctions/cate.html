@@ -1,0 +1,44 @@
+{% extends "auctions/layout.html" %}
+
+{% block title %}
+Categories
+{% endblock %}
+
+{% block body %}
+<h2>Categories</h2>
+<div style="display:flex ; justify-content: space-evenly; margin-top: 20px;">
+<form action="{% url 'filter' %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" name="option" value="Elictronics" style="height:80px ; width:220px; background-color:rgb(243, 243, 243);border:1px solid rgb(238, 238, 238); border-radius: 5px;">
+</form>
+<form action="{% url 'filter' %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" name="option" value="Toys" style="height:80px ; width:220px; background-color:rgb(243, 243, 243);border:1px solid rgb(238, 238, 238); border-radius: 5px;">
+</form>
+<form action="{% url 'filter' %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" name="option" value="Games" style="height:80px ; width:220px; background-color:rgb(243, 243, 243);border:1px solid rgb(238, 238, 238); border-radius: 5px;">
+</form>
+</div>
+<div style="display:flex ; justify-content: space-evenly; margin-top: 20px;">
+<form action="{% url 'filter' %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" name="option" value="Car" style="height:80px ; width:220px; background-color:rgb(243, 243, 243);border:1px solid rgb(238, 238, 238); border-radius: 5px;">
+</form>
+<form action="{% url 'filter' %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" name="option" value="Fashion" style="height:80px ; width:220px; background-color:rgb(243, 243, 243);border:1px solid rgb(238, 238, 238); border-radius: 5px;">
+</form>
+<form action="{% url 'filter' %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" name="option" value="Skins" style="height:80px ; width:220px; background-color:rgb(243, 243, 243);border:1px solid rgb(238, 238, 238); border-radius: 5px;">
+</form>
+</div>
+<div style="display:flex ; justify-content: space-evenly; margin-top: 20px;">
+<form action="{% url 'filter' %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" name="option" value="Home" style="height:80px ; width:220px; background-color:rgb(243, 243, 243);border:1px solid rgb(238, 238, 238); border-radius: 5px;">
+</form>
+</div>
+
+{% endblock %}
